@@ -1,16 +1,16 @@
 use shop;
 
-/*Пусть в таблице users поля created_at и updated_at оказались незаполненными. 
- * Заполните их текущими датой и временем.*/
+/*РџСѓСЃС‚СЊ РІ С‚Р°Р±Р»РёС†Рµ users РїРѕР»СЏ created_at Рё updated_at РѕРєР°Р·Р°Р»РёСЃСЊ РЅРµР·Р°РїРѕР»РЅРµРЅРЅС‹РјРё. 
+ * Р—Р°РїРѕР»РЅРёС‚Рµ РёС… С‚РµРєСѓС‰РёРјРё РґР°С‚РѕР№ Рё РІСЂРµРјРµРЅРµРј.*/
 update users u 
 set created_at = now(),
 	updated_at = now();
 	
 
 /*
-Таблица users была неудачно спроектирована. Записи created_at и updated_at были заданы типом VARCHAR 
-и в них долгое время помещались значения в формате 20.10.2017 8:10. 
-Необходимо преобразовать поля к типу DATETIME, сохранив введённые ранее значения.
+РўР°Р±Р»РёС†Р° users Р±С‹Р»Р° РЅРµСѓРґР°С‡РЅРѕ СЃРїСЂРѕРµРєС‚РёСЂРѕРІР°РЅР°. Р—Р°РїРёСЃРё created_at Рё updated_at Р±С‹Р»Рё Р·Р°РґР°РЅС‹ С‚РёРїРѕРј VARCHAR 
+Рё РІ РЅРёС… РґРѕР»РіРѕРµ РІСЂРµРјСЏ РїРѕРјРµС‰Р°Р»РёСЃСЊ Р·РЅР°С‡РµРЅРёСЏ РІ С„РѕСЂРјР°С‚Рµ 20.10.2017 8:10. 
+РќРµРѕР±С…РѕРґРёРјРѕ РїСЂРµРѕР±СЂР°Р·РѕРІР°С‚СЊ РїРѕР»СЏ Рє С‚РёРїСѓ DATETIME, СЃРѕС…СЂР°РЅРёРІ РІРІРµРґС‘РЅРЅС‹Рµ СЂР°РЅРµРµ Р·РЅР°С‡РµРЅРёСЏ.
 
 ALTER TABLE shop.users MODIFY COLUMN created_at VARCHAR(26) DEFAULT NULL NULL;
 ALTER TABLE shop.users MODIFY COLUMN updated_at VARCHAR(26) DEFAULT NULL NULL;
@@ -18,31 +18,31 @@ ALTER TABLE shop.users MODIFY COLUMN updated_at VARCHAR(26) DEFAULT NULL NULL;
 ALTER TABLE shop.users MODIFY COLUMN created_at DATETIME DEFAULT NULL;
 ALTER TABLE shop.users MODIFY COLUMN updated_at DATETIME DEFAULT NULL;
 
-/*В таблице складских запасов storehouses_products в поле value могут встречаться самые разные цифры: 
- * 0, если товар закончился и выше нуля, если на складе имеются запасы. 
- * Необходимо отсортировать записи таким образом, чтобы они выводились в порядке увеличения значения value. 
- * Однако нулевые запасы должны выводиться в конце, после всех записей.*/
+/*Р’ С‚Р°Р±Р»РёС†Рµ СЃРєР»Р°РґСЃРєРёС… Р·Р°РїР°СЃРѕРІ storehouses_products РІ РїРѕР»Рµ value РјРѕРіСѓС‚ РІСЃС‚СЂРµС‡Р°С‚СЊСЃСЏ СЃР°РјС‹Рµ СЂР°Р·РЅС‹Рµ С†РёС„СЂС‹: 
+ * 0, РµСЃР»Рё С‚РѕРІР°СЂ Р·Р°РєРѕРЅС‡РёР»СЃСЏ Рё РІС‹С€Рµ РЅСѓР»СЏ, РµСЃР»Рё РЅР° СЃРєР»Р°РґРµ РёРјРµСЋС‚СЃСЏ Р·Р°РїР°СЃС‹. 
+ * РќРµРѕР±С…РѕРґРёРјРѕ РѕС‚СЃРѕСЂС‚РёСЂРѕРІР°С‚СЊ Р·Р°РїРёСЃРё С‚Р°РєРёРј РѕР±СЂР°Р·РѕРј, С‡С‚РѕР±С‹ РѕРЅРё РІС‹РІРѕРґРёР»РёСЃСЊ РІ РїРѕСЂСЏРґРєРµ СѓРІРµР»РёС‡РµРЅРёСЏ Р·РЅР°С‡РµРЅРёСЏ value. 
+ * РћРґРЅР°РєРѕ РЅСѓР»РµРІС‹Рµ Р·Р°РїР°СЃС‹ РґРѕР»Р¶РЅС‹ РІС‹РІРѕРґРёС‚СЊСЃСЏ РІ РєРѕРЅС†Рµ, РїРѕСЃР»Рµ РІСЃРµС… Р·Р°РїРёСЃРµР№.*/
 
 select * from storehouses_products
-order by isnull(case when value='0' then null else value end), 4; /*0 приравнен к NULL, всё в конце*/
+order by isnull(case when value='0' then null else value end), 4; /*0 РїСЂРёСЂР°РІРЅРµРЅ Рє NULL, РІСЃС‘ РІ РєРѕРЅС†Рµ*/
 
 
 
-/*Подсчитайте средний возраст пользователей в таблице users.*/
+/*РџРѕРґСЃС‡РёС‚Р°Р№С‚Рµ СЃСЂРµРґРЅРёР№ РІРѕР·СЂР°СЃС‚ РїРѕР»СЊР·РѕРІР°С‚РµР»РµР№ РІ С‚Р°Р±Р»РёС†Рµ users.*/
 select 	sum(TIMESTAMPDIFF(YEAR,u.birthday_at,CURDATE())) / count(1) as average	
 from users u;
 
 
-/*Подсчитайте количество дней рождения, которые приходятся на каждый из дней недели. 
- Следует учесть, что необходимы дни недели текущего года, а не года рождения.*/
+/*РџРѕРґСЃС‡РёС‚Р°Р№С‚Рµ РєРѕР»РёС‡РµСЃС‚РІРѕ РґРЅРµР№ СЂРѕР¶РґРµРЅРёСЏ, РєРѕС‚РѕСЂС‹Рµ РїСЂРёС…РѕРґСЏС‚СЃСЏ РЅР° РєР°Р¶РґС‹Р№ РёР· РґРЅРµР№ РЅРµРґРµР»Рё. 
+ РЎР»РµРґСѓРµС‚ СѓС‡РµСЃС‚СЊ, С‡С‚Рѕ РЅРµРѕР±С…РѕРґРёРјС‹ РґРЅРё РЅРµРґРµР»Рё С‚РµРєСѓС‰РµРіРѕ РіРѕРґР°, Р° РЅРµ РіРѕРґР° СЂРѕР¶РґРµРЅРёСЏ.*/
 
-select case when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =1 then "понедельник"
-			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =2 then "вторник"
-			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =3 then "среда"
-			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =4 then "четверг"
-			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =5 then "пятница"
-			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =6 then "суббота"
-			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =0 then "воскресенье"
+select case when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =1 then "РїРѕРЅРµРґРµР»СЊРЅРёРє"
+			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =2 then "РІС‚РѕСЂРЅРёРє"
+			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =3 then "СЃСЂРµРґР°"
+			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =4 then "С‡РµС‚РІРµСЂРі"
+			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =5 then "РїСЏС‚РЅРёС†Р°"
+			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =6 then "СЃСѓР±Р±РѕС‚Р°"
+			when WEEKDAY(DATE_FORMAT(birthday_at, concat(year(now()),'-%m-%d'))) =0 then "РІРѕСЃРєСЂРµСЃРµРЅСЊРµ"
 			end as days, 
 			count(1) 
 		from users u
